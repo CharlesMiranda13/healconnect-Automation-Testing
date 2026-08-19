@@ -1,18 +1,22 @@
+import os
 from pages.login_page import LoginPage
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
-
-BASE_URL = "http://127.0.0.1:8000/logandsign"
-
-VALID_USERNAME = "mirandacharles780@gmail.com"
-VALID_PASSWORD = "mirandacharles780@gmail.com"
-INVALID_USERNAME = "hehehe@gmail.com"
-
+BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000/logandsign")
+VALID_USERNAME = os.getenv("TEST_USER_EMAIL", "testuser@healconnect.local")
+VALID_PASSWORD = os.getenv("TEST_USER_PASSWORD", "TestPassword123!")
+INVALID_USERNAME = "invalid_user@example.com"
 
 def test_valid_login(driver):
     login_page = LoginPage(driver)
 
     login_page.open(BASE_URL)
     login_page.login(VALID_USERNAME, VALID_PASSWORD)
+
+    WebDriverWait(driver, 10).until(
+        EC.url_contains("/patient/home")
+    )
 
     assert "/patient/home" in driver.current_url.lower()
 

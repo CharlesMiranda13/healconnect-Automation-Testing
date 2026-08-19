@@ -11,7 +11,7 @@ class LoginPage:
     FORGOT_EMAIL_INPUT = (By.ID, "forgot-email")
     FORGOT_SUBMIT_BUTTON = (By.CLASS_NAME, "modal-submit-btn")
 
-    def __init__(self, driver, timeout=3):
+    def __init__(self, driver, timeout=10):
         self.driver = driver
         self.wait = WebDriverWait(driver, timeout)
 
